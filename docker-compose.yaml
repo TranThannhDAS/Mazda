@@ -9,30 +9,6 @@ services:
       - "5217:443"
     networks:
       - mazda_network
-  mazda_db:
-    container_name: mazda_db_container
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: "Datvip9x@"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1434:1433"
-    volumes:
-      - mazda_db_data:/var/opt/mssql
-    networks:
-      - mazda_network
-  nextjs:
-    build: ./carfurniture
-    expose:
-      - "3000"
-    networks:
-      - mazda_network
-  nginx:
-    build: ./carfurniture/nginx
-    ports:
-    - "8080:80" 
-    networks:
-      - mazda_network
 networks:
   mazda_network:
     name: mazda_custom_network
