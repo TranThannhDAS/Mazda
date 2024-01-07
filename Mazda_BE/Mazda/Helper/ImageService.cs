@@ -104,7 +104,7 @@ namespace Mazda.Helper
                         imagepath = Path.Combine(Filepath,filename);
                         if (System.IO.File.Exists(imagepath))
                         {
-                            string _Imageurl = hosturl + "/Upload/" + code_random + "/" + filename;
+                            string _Imageurl = "https://mazdashop.vn" + "/Upload/" + code_random + "/" + filename;
                             Imageurl.Add(new ImageDto
                             {
                                 Image = _Imageurl,
