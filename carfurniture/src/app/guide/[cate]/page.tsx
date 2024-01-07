@@ -166,7 +166,7 @@ const page = (props: { params: { cate: string } }) => {
                   .replace(/&/g, "-and-")}/${d.id}`}
                 className="w-full flex flex-wrap min-[420px]:flex-nowrap mb-6"
               >
-                <div className="min-w-[100%] h-[150px] min-[420px]:min-w-[250px] md:h-[140px] xl:min-w-[350px] xl:h-[210px] mr-3 md:mr-5">
+                <div className="min-w-[100%] h-[150px] min-[420px]:min-w-[266px] md:h-[170px] xl:min-w-[350px] xl:h-[215px] mr-3 md:mr-5">
                   <img
                     src={d.urlImage[0]?.image}
                     alt={d.urlImage[0]?.path}

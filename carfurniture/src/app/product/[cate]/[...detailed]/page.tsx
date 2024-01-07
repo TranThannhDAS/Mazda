@@ -129,7 +129,7 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
             <div className="mt-5">
               <h3 className="text-sm font-semibold">Mô tả</h3>
               <div
-                className={`text-xs md:text-[13px] w-full mb-5 ${styles.dangerouslySet}`}
+                className={`text-xs md:text-[13px] w-full mb-5 ${styles.dangerouslySet} `}
                 dangerouslySetInnerHTML={{ __html: data.product.description }}
               ></div>
             </div>

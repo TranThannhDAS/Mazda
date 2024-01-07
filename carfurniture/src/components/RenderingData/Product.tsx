@@ -75,7 +75,7 @@ const Product: React.FC<{
           className={`text-sm md:text-base h-[43px]  mt-2 overflow-hidden ${styles.description}`}
           style={{
             display: "-webkit-box",
-            WebkitLineClamp: 1,
+            WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
           }}
           dangerouslySetInnerHTML={{ __html: p.description }}

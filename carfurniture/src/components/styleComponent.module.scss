@@ -1,9 +1,9 @@
 .dangerouslySet {
-  word-break: break-all;
+  word-break: break-word;
   img {
     width: 600px;
     height: 200px;
-    object-fit: cover;
+    object-fit: contain;
     margin: auto;
   }
   iframe {
@@ -15,9 +15,9 @@
   }
   @media (min-width: 768px) {
     img {
-      width: 600px;
+      width: 760px;
       height: 400px;
-      object-fit: cover;
+      object-fit: contain;
       margin: auto;
     }
     iframe {
