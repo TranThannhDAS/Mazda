@@ -149,7 +149,7 @@ const RoutListing: React.FC<{
               />
             </div>
           </div>
-          <h3 className="w-full md:hidden text-center border-b">
+          <h3 className="w-full md:hidden text-center  border-b">
             {currentPath} {routs[1]}
           </h3>
         </div>
