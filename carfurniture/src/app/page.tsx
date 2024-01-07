@@ -44,6 +44,10 @@ export default function Home() {
   >([]);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [pageChoice, setPageChoice] = useState<number>(1);
+  const [pageIndexN, setPageIndexN] = useState<number>(0);
+  const [pageChoiceN, setPageChoiceN] = useState<number>(1);
+  const [pageIndexG, setPageIndexG] = useState<number>(0);
+  const [pageChoiceG, setPageChoiceG] = useState<number>(1);
   const [dataGuid, setDataGuid] = useState<
     {
       id: number;
@@ -96,27 +100,37 @@ export default function Home() {
     setDataList(
       resCatePr.data.map((r) => ({ id: r.categoryId, name: r.categoryName }))
     );
-    const resNews = await http.post("Blog/GetPaginationProduct", {
-      pageIndex: 1,
-      pageSize: 4,
-    });
-    setDataNews(resNews.data.data);
-    const resGuide = await http.post("Guide/GetPaginationProduct", {
-      pageIndex: 1,
-      pageSize: 4,
-    });
-    setDataGuid(resGuide.data.data);
+    fetSDataNews();
+    fetSDataGuid();
     const res = await http.get("Button/GetAll");
     setDataSoft(res.data);
     setLoadingType(false);
   };
   const rrr = useRef<boolean>(false);
+  const fetSDataNews = async (index: number = 1, name?: string) => {
+    const resNews = await http.post("Blog/GetPaginationProduct", {
+      pageIndex: index,
+      pageSize: 4,
+    });
+    setPageIndexN(resNews.data.totalPageIndex);
+    setDataNews(resNews.data.data);
+  };
+  const fetSDataGuid = async (index: number = 1, name?: string) => {
+    const resGuide = await http.post("Guide/GetPaginationProduct", {
+      pageIndex: index,
+      pageSize: 4,
+    });
+    setPageIndexG(resGuide.data.totalPageIndex);
+    setDataGuid(resGuide.data.data);
+  };
   const fetSDataProduct = async (index: number = 1, name?: string) => {
     if (rrrd.current) {
       if (caseChose.product.categoryName !== "Tất Cả Sản Phẩm") {
         if (name) {
           setLoading(true);
           const res = await http.post("Product/GetPaginationProduct", {
+            pageIndex: index,
+            pageSize: 8,
             search_Name: name,
             search_CategoryName: caseChose.product?.categoryName,
           });
@@ -200,8 +214,14 @@ export default function Home() {
     fetSDataProduct(1, search);
   };
   const [additionalPage, setAdditionalPage] = useState<number>(1);
+  const [additionalPageN, setAdditionalPageN] = useState<number>(1);
+  const [additionalPageG, setAdditionalPageG] = useState<number>(1);
   let managerIndex = false;
   let isIndex = false;
+  let managerIndexN = false;
+  let isIndexN = false;
+  let managerIndexG = false;
+  let isIndexG = false;
   console.log(dataProducts, "dataProducts");
 
   return (
@@ -286,11 +306,11 @@ export default function Home() {
                       <div key={p} className="flex w-auto h-fit">
                         {additionalPage > 1 && additionalPage === p && (
                           <div
-                            onClick={() =>
+                            onClick={() => {
                               setAdditionalPage((pre) =>
                                 pre - 1 < 1 ? 1 : pre - 1
-                              )
-                            }
+                              );
+                            }}
                             className="flex items-center cursor-pointer text-[22px] px-1 py-[2px]  mr-2 bg-[#22b3bf] text-white"
                           >
                             <MdSkipPrevious />
@@ -311,6 +331,7 @@ export default function Home() {
                                 if (p !== pageChoice) {
                                   fetSDataProduct(p);
                                   setPageChoice(p);
+                                  rrrd.current = true;
                                 }
                               }}
                               className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
@@ -408,8 +429,64 @@ export default function Home() {
                   <p>Loading...</p>
                 )}{" "}
               </div>
+              <div className="w-full h-fit flex justify-center pb-1 border-b mt-[25px]">
+                {pageIndex > 1 &&
+                  Array.from(
+                    { length: pageIndex },
+                    (_, index) => index + 1
+                  ).map((p) => {
+                    if (p > additionalPage * 5 && !isIndex) {
+                      isIndex = true;
+                      managerIndex = true;
+                    } else {
+                      managerIndex = false;
+                    }
+                    return (
+                      <div key={p} className="flex w-auto h-fit">
+                        {additionalPage > 1 && additionalPage === p && (
+                          <div
+                            onClick={() => {
+                              setAdditionalPage((pre) =>
+                                pre - 1 < 1 ? 1 : pre - 1
+                              );
+                            }}
+                            className="flex items-center cursor-pointer text-[22px] px-1 py-[2px]  mr-2 bg-[#22b3bf] text-white"
+                          >
+                            <MdSkipPrevious />
+                          </div>
+                        )}
+                        {managerIndex && p > additionalPage * 5 ? (
+                          <div
+                            onClick={() => setAdditionalPage((pre) => pre + 1)}
+                            className="flex items-center text-[22px]  cursor-pointer  px-1 py-[2px]  ml-2 bg-[#22b3bf] text-white"
+                          >
+                            <BiSkipNext />
+                          </div>
+                        ) : (
+                          (additionalPage - 1) * (pageIndex - 5) < p &&
+                          !isIndex && (
+                            <p
+                              onClick={() => {
+                                if (p !== pageChoice) {
+                                  fetSDataProduct(p);
+                                  setPageChoice(p);
+                                  rrrd.current = true;
+                                }
+                              }}
+                              className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
+                                pageChoice === p ? "bg-[#d2d5d8]" : ""
+                              } cursor-pointer`}
+                            >
+                              {p}
+                            </p>
+                          )
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
             </div>{" "}
-            <div className="flex mt-3 flex-wrap justify-between h-auto overflow-hidden border-b">
+            <div className="flex mt-3 flex-wrap justify-between h-auto overflow-hidden ">
               <div
                 className={`w-[49%] h-fit flex flex-wrap justify-around ${styles.news}`}
               >
@@ -456,6 +533,64 @@ export default function Home() {
                       </div>
                     </Link>
                   ))}
+                </div>
+                <div className="w-full h-fit flex justify-center pb-1 border-b mt-[25px]">
+                  {pageIndexN > 1 &&
+                    Array.from(
+                      { length: pageIndexN },
+                      (_, index) => index + 1
+                    ).map((p) => {
+                      if (p > additionalPage * 5 && !isIndexN) {
+                        isIndexN = true;
+                        managerIndexN = true;
+                      } else {
+                        managerIndexN = false;
+                      }
+                      return (
+                        <div key={p} className="flex w-auto h-fit">
+                          {additionalPage > 1 && additionalPage === p && (
+                            <div
+                              onClick={() => {
+                                setAdditionalPageN((pre) =>
+                                  pre - 1 < 1 ? 1 : pre - 1
+                                );
+                              }}
+                              className="flex items-center cursor-pointer text-[22px] px-1 py-[2px]  mr-2 bg-[#22b3bf] text-white"
+                            >
+                              <MdSkipPrevious />
+                            </div>
+                          )}
+                          {managerIndexN && p > additionalPageN * 5 ? (
+                            <div
+                              onClick={() =>
+                                setAdditionalPageN((pre) => pre + 1)
+                              }
+                              className="flex items-center text-[22px]  cursor-pointer  px-1 py-[2px]  ml-2 bg-[#22b3bf] text-white"
+                            >
+                              <BiSkipNext />
+                            </div>
+                          ) : (
+                            (additionalPageN - 1) * (pageIndexN - 5) < p &&
+                            !isIndex && (
+                              <p
+                                onClick={() => {
+                                  if (p !== pageChoiceN) {
+                                    fetSDataNews(p);
+                                    setPageChoiceN(p);
+                                    rrrd.current = true;
+                                  }
+                                }}
+                                className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
+                                  pageChoiceN === p ? "bg-[#d2d5d8]" : ""
+                                } cursor-pointer`}
+                              >
+                                {p}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
               </div>{" "}
               <div
@@ -504,6 +639,64 @@ export default function Home() {
                       </div>
                     </Link>
                   ))}
+                </div>
+                <div className="w-full h-fit flex justify-center pb-1 border-b mt-[25px]">
+                  {pageIndexG > 1 &&
+                    Array.from(
+                      { length: pageIndexG },
+                      (_, index) => index + 1
+                    ).map((p) => {
+                      if (p > additionalPage * 5 && !isIndexG) {
+                        isIndexG = true;
+                        managerIndexG = true;
+                      } else {
+                        managerIndexG = false;
+                      }
+                      return (
+                        <div key={p} className="flex w-auto h-fit">
+                          {additionalPageG > 1 && additionalPageG === p && (
+                            <div
+                              onClick={() => {
+                                setAdditionalPageN((pre) =>
+                                  pre - 1 < 1 ? 1 : pre - 1
+                                );
+                              }}
+                              className="flex items-center cursor-pointer text-[22px] px-1 py-[2px]  mr-2 bg-[#22b3bf] text-white"
+                            >
+                              <MdSkipPrevious />
+                            </div>
+                          )}
+                          {managerIndexG && p > additionalPageG * 5 ? (
+                            <div
+                              onClick={() =>
+                                setAdditionalPageN((pre) => pre + 1)
+                              }
+                              className="flex items-center text-[22px]  cursor-pointer  px-1 py-[2px]  ml-2 bg-[#22b3bf] text-white"
+                            >
+                              <BiSkipNext />
+                            </div>
+                          ) : (
+                            (additionalPageG - 1) * (pageIndexG - 5) < p &&
+                            !isIndex && (
+                              <p
+                                onClick={() => {
+                                  if (p !== pageChoiceG) {
+                                    fetSDataGuid(p);
+                                    setPageChoiceG(p);
+                                    rrrd.current = true;
+                                  }
+                                }}
+                                className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
+                                  pageChoiceG === p ? "bg-[#d2d5d8]" : ""
+                                } cursor-pointer`}
+                              >
+                                {p}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>

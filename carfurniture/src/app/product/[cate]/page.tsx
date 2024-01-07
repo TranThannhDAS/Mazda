@@ -31,6 +31,7 @@ const page = (props: { params: { cate: string } }) => {
   >();
 
   const getProduct = async (cate: string, index = 1, name?: string) => {
+    setLoading(true);
     if (decodeURIComponent(cate)?.replace(/-/g, " ") === "Đã xem") {
       if (typeof localStorage !== "undefined") {
         const hasSeen: number[] =
@@ -107,14 +108,11 @@ const page = (props: { params: { cate: string } }) => {
     } else {
       if (decodeURIComponent(cate) !== "Tất Cả Sản Phẩm") {
         if (name) {
-          setLoading(true);
           const res = await http.post("Product/GetPaginationProduct", {
             pageIndex: index,
             pageSize: 6,
             search_Name: name,
-            search_CategoryName: decodeURIComponent(cate),
           });
-          setLoading(false);
           setPageIndex(res.data.totalPageIndex);
           setData(res.data.data);
         } else {
@@ -122,7 +120,6 @@ const page = (props: { params: { cate: string } }) => {
           const res = await http.post("Product/GetPaginationProduct", {
             pageIndex: index,
             pageSize: 6,
-            search_CategoryName: decodeURIComponent(cate),
           });
           setPageIndex(res.data.totalPageIndex);
           setLoadingSearch(false);
@@ -130,13 +127,11 @@ const page = (props: { params: { cate: string } }) => {
         }
       } else {
         if (name) {
-          setLoading(true);
           const res = await http.post("Product/GetPaginationProduct", {
             pageIndex: index,
             pageSize: 4,
             search_Name: name,
           });
-          setLoading(false);
           setPageIndex(res.data.totalPageIndex);
           setData(res.data.data);
         } else {
@@ -151,6 +146,7 @@ const page = (props: { params: { cate: string } }) => {
         }
       }
     }
+    setLoading(false);
   };
   const handleSearch = (e: any) => {
     setSearch(e.target.value);
@@ -169,7 +165,7 @@ const page = (props: { params: { cate: string } }) => {
   let isIndex = false;
   return (
     <>
-      <div className="w-full  min-[800px]:w-[49%] min-[1020px]:w-[60%] p-3">
+      <div className="w-full min-[800px]:w-[49%] min-[1020px]:w-[60%] p-3">
         {decodeURIComponent(props.params.cate) !== "Đã xem" && (
           <div className="w-full mb-4">
             <InputSearch
