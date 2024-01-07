@@ -290,65 +290,9 @@ export default function Home() {
                   loading={loading}
                 />
               </div>
-              <div className="w-full h-fit flex justify-center pb-1 border-b mt-[25px]">
-                {pageIndex > 1 &&
-                  Array.from(
-                    { length: pageIndex },
-                    (_, index) => index + 1
-                  ).map((p) => {
-                    if (p > additionalPage * 5 && !isIndex) {
-                      isIndex = true;
-                      managerIndex = true;
-                    } else {
-                      managerIndex = false;
-                    }
-                    return (
-                      <div key={p} className="flex w-auto h-fit">
-                        {additionalPage > 1 && additionalPage === p && (
-                          <div
-                            onClick={() => {
-                              setAdditionalPage((pre) =>
-                                pre - 1 < 1 ? 1 : pre - 1
-                              );
-                            }}
-                            className="flex items-center cursor-pointer text-[22px] px-1 py-[2px]  mr-2 bg-[#22b3bf] text-white"
-                          >
-                            <MdSkipPrevious />
-                          </div>
-                        )}
-                        {managerIndex && p > additionalPage * 5 ? (
-                          <div
-                            onClick={() => setAdditionalPage((pre) => pre + 1)}
-                            className="flex items-center text-[22px]  cursor-pointer  px-1 py-[2px]  ml-2 bg-[#22b3bf] text-white"
-                          >
-                            <BiSkipNext />
-                          </div>
-                        ) : (
-                          (additionalPage - 1) * (pageIndex - 5) < p &&
-                          !isIndex && (
-                            <p
-                              onClick={() => {
-                                if (p !== pageChoice) {
-                                  fetSDataProduct(p);
-                                  setPageChoice(p);
-                                  rrrd.current = true;
-                                }
-                              }}
-                              className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
-                                pageChoice === p ? "bg-[#d2d5d8]" : ""
-                              } cursor-pointer`}
-                            >
-                              {p}
-                            </p>
-                          )
-                        )}
-                      </div>
-                    );
-                  })}
-              </div>
             </div>
             <div>
-              <div className="w-full flex flex-wrap mt-7 px-1 justify-center">
+              <div className="w-full flex flex-wrap mt-7 px-1 justify-evenly ">
                 {!loadingType ? (
                   <>
                     {dataProducts.length > 0 ? (
@@ -361,11 +305,11 @@ export default function Home() {
                             .replace(/\s+/g, "-")
                             .replace(/&/g, "-and-")}/${r.id}`}
                           key={r.id}
-                          className={`w-[230px] ${
-                            dataProducts.length === index + 1 ? "" : "mr-4"
+                          className={`w-[45%] sm:w-[230px] ${
+                            dataProducts.length === index + 1 ? "" : ""
                           } md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer`}
                         >
-                          <div className="w-full h-[164px] md:h-[215px]">
+                          <div className="w-full h-[130px] sm:h-[164px] md:h-[215px]">
                             <img
                               src={r.urlImage[0]?.image}
                               alt={r.urlImage[0]?.path}
@@ -374,12 +318,12 @@ export default function Home() {
                           </div>
                           <div className={`mt-1 ${styles.containerProductTag}`}>
                             <h3
-                              className={`font-bold text-sm md:text-base ${styles.nameTag}`}
+                              className={`font-bold text-[13px] sm:text-sm md:text-base ${styles.nameTag}`}
                             >
                               {r.name}
                             </h3>
                             <div className="w-full mt-1 md:mt-2 flex items-center border-b border-solid">
-                              <p className="text-[13px] md:text-[14px] font-medium text-[crimson]">
+                              <p className="text-[11px] sm:text-[13px] md:text-[14px] font-medium text-[crimson]">
                                 {r.price
                                   .toLocaleString("en-US")
                                   .replace(/,/g, ".")}
@@ -393,7 +337,7 @@ export default function Home() {
                               )}
                             </div>
                             <div
-                              className={`text-sm md:text-base h-[45px]  mt-2 overflow-hidden ${styles.description}`}
+                              className={`text-[13px] sm:text-sm md:text-base h-[40px] sm:h-[45px]  mt-2 overflow-hidden ${styles.description}`}
                               style={{
                                 display: "-webkit-box",
                                 WebkitLineClamp: 2,
@@ -405,11 +349,11 @@ export default function Home() {
                             ></div>
                           </div>
                           <div className="my-2 flex items-center justify-center relative">
-                            <button className="text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 pr-3 rounded-md">
+                            <button className="text-[12px] sm:text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 pr-3 rounded-md">
                               View more
                             </button>
                             <div
-                              className="absolute text-[22px] top-[5px] right-[10px] md:right-[40px] text-[crimson]"
+                              className="absolute text-[18px] sm:text-[22px] top-[5px] right-[10px] md:right-[40px] text-[crimson]"
                               style={{ color: "crimson !important" }}
                               onClick={(e) => {
                                 e.preventDefault();

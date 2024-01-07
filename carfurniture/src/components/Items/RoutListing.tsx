@@ -49,23 +49,6 @@ const RoutListing: React.FC<{
         : defaultR,
     ];
     setRouts(d);
-    rr.current = true;
-    const hasSeen: number[] = JSON.parse(
-      window.localStorage.getItem("product") ?? JSON.stringify([])
-    );
-    const getProduct = async () => {
-      if (hasSeen.length === 1) {
-        const re1 = await http.get(`Product/GetByID/${hasSeen[0]}`);
-        setDataHasSeen([re1.data]);
-      }
-      if (hasSeen.length === 2) {
-        const re1 = await http.get(`Product/GetByID/${hasSeen[0]}`);
-        setDataHasSeen([re1.data]);
-        const re2 = await http.get(`Product/GetByID/${hasSeen[1]}`);
-        setDataHasSeen([re1.data, re2.data]);
-      }
-    };
-    getProduct();
   }, []);
   console.log(
     routs,
@@ -115,6 +98,23 @@ const RoutListing: React.FC<{
         setLoad(!load);
       }
     }
+    rr.current = true;
+    const hasSeen: number[] = JSON.parse(
+      window.localStorage.getItem("product") ?? JSON.stringify([])
+    );
+    const getProduct = async () => {
+      if (hasSeen.length === 1) {
+        const re1 = await http.get(`Product/GetByID/${hasSeen[0]}`);
+        setDataHasSeen([re1.data]);
+      }
+      if (hasSeen.length === 2) {
+        const re1 = await http.get(`Product/GetByID/${hasSeen[0]}`);
+        setDataHasSeen([re1.data]);
+        const re2 = await http.get(`Product/GetByID/${hasSeen[1]}`);
+        setDataHasSeen([re1.data, re2.data]);
+      }
+    };
+    getProduct();
   }, [pathname, rr.current]);
   const [load, setLoad] = useState(false);
   const handleRount = (vl: string) => {
@@ -149,7 +149,7 @@ const RoutListing: React.FC<{
               />
             </div>
           </div>
-          <h3 className="w-full md:hidden text-center border-b">
+          <h3 className="w-full md:hidden text-center  border-b">
             {currentPath} {routs[1]}
           </h3>
         </div>
@@ -162,7 +162,14 @@ const RoutListing: React.FC<{
                 key={p.product.id}
                 className="w-[200px] h-auto m-3 md:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer"
               >
-                <Link href="/[slug]" as={`${p.categoryName}/${p.product.id}`}>
+                <Link
+                  href="/[slug]"
+                  as={`${p.categoryName
+                    ?.replace(/\s+/g, "-")
+                    .replace(/&/g, "-and-")}/${p.product.name
+                    ?.replace(/\s+/g, "-")
+                    .replace(/&/g, "-and-")}/${p.product.id}`}
+                >
                   <div className="w-full h-[200px] md:h-[230px]">
                     <img
                       src={p.avatar[0]?.image}

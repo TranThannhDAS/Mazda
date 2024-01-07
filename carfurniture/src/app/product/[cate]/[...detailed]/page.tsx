@@ -8,8 +8,6 @@ import styles from "@/components/styleComponent.module.scss";
 import Image from "./Image";
 
 const page = (props: { params: { detailed: string[]; cate: string } }) => {
-  console.log(props, "props");
-
   const [data, setData] = useState<
     | {
         product: {
@@ -41,15 +39,16 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
 
         const resD = await http.get(`Product/GetByID/${res.data.data[0]?.id}`);
         resD.data.urlImage = [...resD.data.avatar, ...resD.data.urlImage];
-        setData(resD.data);
+        if (resD.data) setData(resD.data);
       } else {
         const res = await http.get(`Product/GetByID/${detailed[1]}`);
         res.data.urlImage = [...res.data.avatar, ...res.data.urlImage];
-        setData(res.data);
+        if (res.data) setData(res.data);
       }
     };
     getProduct(props.params.detailed);
   }, []);
+  console.log(props, "props", data);
 
   return (
     <div className="w-full min-[1000px]:flex justify-center">
