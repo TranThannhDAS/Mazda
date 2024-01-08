@@ -488,7 +488,7 @@ export default function Home() {
                           {n.name}
                         </h3>
                         <div
-                          className={`text-[13px] ${styles.desTag}`}
+                          className={`text-[13px] h-[39px] ${styles.desTag}`}
                           dangerouslySetInnerHTML={{
                             __html:
                               ' <strong style="color: crimson">*</strong>' +
@@ -607,7 +607,7 @@ export default function Home() {
                           {n.name}
                         </h3>
                         <div
-                          className={`text-[13px] ${styles.desTag}`}
+                          className={`text-[13px] h-[39px] ${styles.desTag}`}
                           dangerouslySetInnerHTML={{
                             __html:
                               ` <strong className="text-[crimson]">*</strong>` +
