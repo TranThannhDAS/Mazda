@@ -138,7 +138,7 @@ const GuideAdmin: React.FC<{
       >
         Update
       </div>
-      <div className="min-w-full h-[130px] md:min-w-[250px] md:h-[155px] xl:min-w-[350px] xl:h-[210px] mr-3 md:mr-5">
+      <div className="min-w-full h-[130px] md:min-w-[250px] md:h-[170px] xl:min-w-[350px] xl:h-[210px] mr-3 md:mr-5">
         <img
           src={g.urlImage[0]?.image}
           alt={g.urlImage[0]?.path}
@@ -161,7 +161,7 @@ const GuideAdmin: React.FC<{
           {moment(g.create_Date).format("DD/MM/YYYY HH:MM:SS")}
         </p>
         <div
-          className={`text-sm md:text-base h-[40px] mt-2 overflow-hidden ${styles.description}`}
+          className={`text-sm md:text-base mt-2 overflow-hidden ${styles.description}`}
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 4,

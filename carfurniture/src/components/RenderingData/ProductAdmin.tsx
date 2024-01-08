@@ -146,7 +146,7 @@ const ProductAdmin: React.FC<{
           )}
         </div>
         <div
-          className={`text-[13px] h-[38px] md:text-[14px] mt-2 md:mt-3 ${styles.desTag}`}
+          className={`text-[13px] md:text-[14px] mt-2 md:mt-3 ${styles.desTag}`}
           dangerouslySetInnerHTML={{ __html: p.description }}
         ></div>
       </div>

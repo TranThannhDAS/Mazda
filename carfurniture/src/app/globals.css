@@ -81,3 +81,7 @@
   background-size: cover;
   cursor: pointer;
 }
+
+.ql-align-justify {
+  text-align: justify;
+}
