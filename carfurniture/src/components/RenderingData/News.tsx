@@ -43,7 +43,7 @@ const News: React.FC<{
             display: "-webkit-box",
             WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
-            wordBreak: "break-all",
+            wordBreak: "break-word",
           }}
         >
           {n.name}
@@ -52,7 +52,7 @@ const News: React.FC<{
           {moment(n.create_Date).format("DD/MM/YYYY HH:MM:SS")}
         </p>
         <div
-          className={`text-sm md:text-base  mt-2 overflow-hidden ${styles.description}`}
+          className={`text-sm md:text-base h-[40px]  mt-2 overflow-hidden ${styles.description}`}
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 4,
