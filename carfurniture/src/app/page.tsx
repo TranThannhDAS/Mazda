@@ -292,7 +292,7 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <div className="w-full flex flex-wrap mt-7 px-1 justify-evenly ">
+              <div className="w-full flex flex-wrap mt-7 px-1 justify-center h-fit">
                 {!loadingType ? (
                   <>
                     {dataProducts.length > 0 ? (
@@ -306,7 +306,7 @@ export default function Home() {
                             .replace(/&/g, "-and-")}/${r.id}`}
                           key={r.id}
                           id={index === arr.length - 1 ? "dropdown" : ""}
-                          className={`w-[45%] sm:w-[230px] m-1 md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer`}
+                          className={`w-[45%] sm:w-[230px] m-1 sm:m-2 md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px]  cursor-pointer`}
                         >
                           <div className="w-full h-[130px] sm:h-[164px] md:h-[215px]">
                             <img
@@ -464,7 +464,7 @@ export default function Home() {
                           className={`text-[13px] ${styles.desTag}`}
                           dangerouslySetInnerHTML={{
                             __html:
-                              ' <strong className="text-[crimson]">*</strong>' +
+                              ' <strong style="color: crimson">*</strong>' +
                               n.content,
                           }}
                         ></div>
