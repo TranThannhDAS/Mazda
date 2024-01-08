@@ -113,6 +113,7 @@ export default function Home() {
       pageSize: 4,
     });
     setPageIndexN(resNews.data.totalPageIndex);
+    setLoadingIndex(0);
     setDataNews(resNews.data.data);
   };
   const fetSDataGuid = async (index: number = 1, name?: string) => {
@@ -121,6 +122,7 @@ export default function Home() {
       pageSize: 4,
     });
     setPageIndexG(resGuide.data.totalPageIndex);
+    setLoadingIndex(0);
     setDataGuid(resGuide.data.data);
   };
   const fetSDataProduct = async (index: number = 1, name?: string) => {
@@ -189,6 +191,7 @@ export default function Home() {
         }
       }
     }
+    setLoadingIndex(0);
   };
 
   useEffect(() => {
@@ -222,6 +225,7 @@ export default function Home() {
   let isIndexN = false;
   let managerIndexG = false;
   let isIndexG = false;
+  const [loadingIndex, setLoadingIndex] = useState<number>(0);
   console.log(dataProducts, "dataProducts");
 
   return (
@@ -292,7 +296,7 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <div className="h-[1272px] min-[640px]:h-[1455px] min-[1062px]:h-[1267px] min-[1345px]:h-[834px]">
+              <div className="h-[1272px] min-[640px]:h-[1455px] min-[768px]:h-[1690px] min-[1062px]:h-[1267px] min-[1345px]:h-[834px]">
                 <div className="w-full flex flex-wrap mt-7 px-1 justify-center ">
                   {!loadingType ? (
                     <>
@@ -376,7 +380,10 @@ export default function Home() {
                   )}{" "}
                 </div>
               </div>
-              <div className="w-full h-fit flex justify-center pb-1 border-b mt-[25px]">
+              <div className="w-full  flex flex-wrap justify-center pb-1 border-b mt-[25px]">
+                {loadingIndex === 1 && (
+                  <p className="text-[14px] w-full text-center">Loading...</p>
+                )}
                 {pageIndex > 1 &&
                   Array.from(
                     { length: pageIndex },
@@ -416,6 +423,7 @@ export default function Home() {
                               onClick={() => {
                                 if (p !== pageChoice) {
                                   rrrd.current = true;
+                                  setLoadingIndex(1);
                                   fetSDataProduct(p);
                                   setPageChoice(p);
                                 }
@@ -433,16 +441,16 @@ export default function Home() {
                   })}
               </div>
             </div>{" "}
-            <div className="flex mt-3 flex-wrap justify-between h-auto overflow-hidden ">
+            <div className="flex mt-3  flex-wrap justify-between overflow-hidden ">
               <div
-                className={`w-[49%] h-fit flex flex-wrap justify-around ${styles.news}`}
+                className={`w-[49%] flex  flex-wrap justify-around ${styles.news}`}
               >
                 <h3
                   className={`text-base w-full font-semibold text-center my-5 ${styles.hh3}`}
                 >
                   Tin tức
                 </h3>
-                <div className="flex flex-wrap justify-around">
+                <div className="flex flex-wrap justify-around min-[1080px]:h-[678px] h-[1290px]">
                   {dataNews.map((n) => (
                     <Link
                       href={`news/${n.categoryName
@@ -451,7 +459,7 @@ export default function Home() {
                         .replace(/\s+/g, "-")
                         .replace(/&/g, "-and-")}/${n.id}`}
                       key={n.id}
-                      className="w-[230px] xl:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer mr-2"
+                      className="w-[230px] h-fit xl:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer mr-2"
                     >
                       <div className="w-full h-[168px] xl:h-[174px]">
                         <img
@@ -461,7 +469,9 @@ export default function Home() {
                         />
                       </div>
                       <div className={`mt-1 ${styles.containerProductTag}`}>
-                        <h3 className={`font-bold text-sm  ${styles.nameTag}`}>
+                        <h3
+                          className={`font-bold text-sm h-[40px] ${styles.nameTag} ${styles.nameTagB}`}
+                        >
                           {n.name}
                         </h3>
                         <div
@@ -481,7 +491,10 @@ export default function Home() {
                     </Link>
                   ))}
                 </div>
-                <div className="w-full h-fit flex justify-center pb-1 border-b mt-[25px]">
+                <div className="w-full h-fit flex flex-wrap justify-center pb-1 border-b mt-[25px]">
+                  {loadingIndex === 2 && (
+                    <p className="text-[14px] w-full text-center">Loading...</p>
+                  )}
                   {pageIndexN > 1 &&
                     Array.from(
                       { length: pageIndexN },
@@ -523,6 +536,7 @@ export default function Home() {
                                 onClick={() => {
                                   if (p !== pageChoiceN) {
                                     rrrd.current = true;
+                                    setLoadingIndex(2);
                                     fetSDataNews(p);
                                     setPageChoiceN(p);
                                   }
@@ -541,14 +555,14 @@ export default function Home() {
                 </div>
               </div>{" "}
               <div
-                className={`w-[49%] h-fit flex flex-wrap justify-around ${styles.news}`}
+                className={`w-[49%]  flex flex-wrap justify-around ${styles.news}`}
               >
                 <h3
                   className={`text-base w-full font-semibold text-center my-5 ${styles.hh4}`}
                 >
                   Hướng dẫn
                 </h3>
-                <div className="flex flex-wrap justify-around">
+                <div className="flex flex-wrap justify-around min-[1080px]:h-[678px] h-[1290px]">
                   {dataGuid.map((n) => (
                     <Link
                       href={`guide/${n.categoryName
@@ -557,7 +571,7 @@ export default function Home() {
                         .replace(/\s+/g, "-")
                         .replace(/&/g, "-and-")}/${n.id}`}
                       key={n.id}
-                      className="w-[230px] xl:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer mr-2"
+                      className="w-[230px] h-fit xl:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer mr-2"
                     >
                       <div className="w-full h-[168px] xl:h-[174px]">
                         <img
@@ -567,7 +581,9 @@ export default function Home() {
                         />
                       </div>
                       <div className={`mt-1 ${styles.containerProductTag}`}>
-                        <h3 className={`font-bold text-sm  ${styles.nameTag}`}>
+                        <h3
+                          className={`font-bold text-sm  h-[40px] ${styles.nameTag}  ${styles.nameTagB}`}
+                        >
                           {n.name}
                         </h3>
                         <div
@@ -587,7 +603,10 @@ export default function Home() {
                     </Link>
                   ))}
                 </div>
-                <div className="w-full h-fit flex justify-center pb-1 border-b mt-[25px]">
+                <div className="w-full h-fit flex flex-wrap justify-center pb-1 border-b mt-[25px]">
+                  {loadingIndex === 3 && (
+                    <p className="text-[14px] w-full text-center">Loading...</p>
+                  )}
                   {pageIndexG > 1 &&
                     Array.from(
                       { length: pageIndexG },
@@ -629,6 +648,7 @@ export default function Home() {
                                 onClick={() => {
                                   if (p !== pageChoiceG) {
                                     rrrd.current = true;
+                                    setLoadingIndex(3);
                                     fetSDataGuid(p);
                                     setPageChoiceG(p);
                                   }

@@ -29,7 +29,18 @@
     }
   }
   .nameTag {
-    height: 48px;
+    height: 37px;
+  }
+  .nameTagB {
+    height: 40px;
+  }
+  @media (min-width: 768px) {
+    .nameTag {
+      height: 48px;
+    }
+    .nameTagB {
+      height: 40px;
+    }
   }
 }
 
