@@ -35,7 +35,7 @@ const page = (props: { params: { detailed: string[] | string } }) => {
             <div className="w-[90%] h-[90%]">
               <h3
                 className="text-base md:text-[17px] font-bold"
-                style={{ wordBreak: "break-all" }}
+                style={{ wordBreak: "break-word" }}
               >
                 {data?.blog.name}{" "}
               </h3>
@@ -45,7 +45,7 @@ const page = (props: { params: { detailed: string[] | string } }) => {
               </p>
             </div>
             <div className="min-[1000px]:flex w-full">
-              <div className="mt-5 w-full" style={{ wordBreak: "break-all" }}>
+              <div className="mt-5 w-full" style={{ wordBreak: "break-word" }}>
                 {data && (
                   <div
                     className={`text-xs md:text-[13px] ${styles.dangerouslySet}`}

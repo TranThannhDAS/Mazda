@@ -147,7 +147,7 @@ const GuideAdmin: React.FC<{
       </div>
       <div className="">
         <h3
-          className="text-base md:text-[17px] font-bold overflow-hidden"
+          className="text-base md:text-[17px]  font-bold overflow-hidden"
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 2,
@@ -161,7 +161,7 @@ const GuideAdmin: React.FC<{
           {moment(g.create_Date).format("DD/MM/YYYY HH:MM:SS")}
         </p>
         <div
-          className={`text-sm md:text-base  mt-2 overflow-hidden ${styles.description}`}
+          className={`text-sm md:text-base h-[40px] mt-2 overflow-hidden ${styles.description}`}
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 4,

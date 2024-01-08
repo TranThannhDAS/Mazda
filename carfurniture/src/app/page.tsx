@@ -296,7 +296,7 @@ export default function Home() {
                 {!loadingType ? (
                   <>
                     {dataProducts.length > 0 ? (
-                      dataProducts.map((r, index) => (
+                      dataProducts.map((r, index, arr) => (
                         <Link
                           href="/[slug]"
                           as={`product/${r.categoryName
@@ -305,9 +305,8 @@ export default function Home() {
                             .replace(/\s+/g, "-")
                             .replace(/&/g, "-and-")}/${r.id}`}
                           key={r.id}
-                          className={`w-[45%] sm:w-[230px] ${
-                            dataProducts.length === index + 1 ? "" : ""
-                          } md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer`}
+                          id={index === arr.length - 1 ? "dropdown" : ""}
+                          className={`w-[45%] sm:w-[230px] m-1 md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer`}
                         >
                           <div className="w-full h-[130px] sm:h-[164px] md:h-[215px]">
                             <img
@@ -412,9 +411,9 @@ export default function Home() {
                             <p
                               onClick={() => {
                                 if (p !== pageChoice) {
+                                  rrrd.current = true;
                                   fetSDataProduct(p);
                                   setPageChoice(p);
-                                  rrrd.current = true;
                                 }
                               }}
                               className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
@@ -484,7 +483,7 @@ export default function Home() {
                       { length: pageIndexN },
                       (_, index) => index + 1
                     ).map((p) => {
-                      if (p > additionalPage * 5 && !isIndexN) {
+                      if (p > additionalPageN * 5 && !isIndexN) {
                         isIndexN = true;
                         managerIndexN = true;
                       } else {
@@ -492,7 +491,7 @@ export default function Home() {
                       }
                       return (
                         <div key={p} className="flex w-auto h-fit">
-                          {additionalPage > 1 && additionalPage === p && (
+                          {additionalPageN > 1 && additionalPageN === p && (
                             <div
                               onClick={() => {
                                 setAdditionalPageN((pre) =>
@@ -519,9 +518,9 @@ export default function Home() {
                               <p
                                 onClick={() => {
                                   if (p !== pageChoiceN) {
+                                    rrrd.current = true;
                                     fetSDataNews(p);
                                     setPageChoiceN(p);
-                                    rrrd.current = true;
                                   }
                                 }}
                                 className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
@@ -590,7 +589,7 @@ export default function Home() {
                       { length: pageIndexG },
                       (_, index) => index + 1
                     ).map((p) => {
-                      if (p > additionalPage * 5 && !isIndexG) {
+                      if (p > additionalPageG * 5 && !isIndexG) {
                         isIndexG = true;
                         managerIndexG = true;
                       } else {
@@ -601,7 +600,7 @@ export default function Home() {
                           {additionalPageG > 1 && additionalPageG === p && (
                             <div
                               onClick={() => {
-                                setAdditionalPageN((pre) =>
+                                setAdditionalPageG((pre) =>
                                   pre - 1 < 1 ? 1 : pre - 1
                                 );
                               }}
@@ -613,7 +612,7 @@ export default function Home() {
                           {managerIndexG && p > additionalPageG * 5 ? (
                             <div
                               onClick={() =>
-                                setAdditionalPageN((pre) => pre + 1)
+                                setAdditionalPageG((pre) => pre + 1)
                               }
                               className="flex items-center text-[22px]  cursor-pointer  px-1 py-[2px]  ml-2 bg-[#22b3bf] text-white"
                             >
@@ -621,13 +620,13 @@ export default function Home() {
                             </div>
                           ) : (
                             (additionalPageG - 1) * (pageIndexG - 5) < p &&
-                            !isIndex && (
+                            !isIndexG && (
                               <p
                                 onClick={() => {
                                   if (p !== pageChoiceG) {
+                                    rrrd.current = true;
                                     fetSDataGuid(p);
                                     setPageChoiceG(p);
-                                    rrrd.current = true;
                                   }
                                 }}
                                 className={`mx-1 px-[6px] hover:bg-[#d2d5d8] border border-[#2b2b2b]   ${
