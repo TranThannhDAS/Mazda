@@ -52,7 +52,7 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
 
   return (
     <div className="w-full min-[1000px]:flex justify-center">
-      {data && (
+      {data ? (
         <div className="w-full min-[1000px]:w-[90%] relative mt-15 border-t p-5">
           <div>
             <div className="min-[1000px]:flex">
@@ -135,6 +135,8 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
           </div>
           <div></div>
         </div>
+      ) : (
+        <p className="m-2">Loading...</p>
       )}
     </div>
   );
