@@ -3,11 +3,13 @@
 import InputSearch from "@/components/Items/InputSearch";
 import React, { useEffect, useState } from "react";
 import styles from "../../news/styleNews.module.scss";
+import stylesD from "../../../components/Items/styleItems.module.scss";
 import http from "@/utils/http";
 import moment from "moment";
 import Link from "next/link";
 import { MdSkipPrevious } from "react-icons/md";
 import { BiSkipNext } from "react-icons/bi";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const page = (props: { params: { cate: string } }) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
@@ -25,6 +27,7 @@ const page = (props: { params: { cate: string } }) => {
       urlImage: { image: string; path: string }[];
     }[]
   >([]);
+  const [loadingOpen, setLoadingOpen] = useState<number | null>(null);
   const getNews = async (cate: string, index = 1, name?: string) => {
     setLoading(true);
     if (decodeURIComponent(cate) !== "Tất Cả Hướng Dẫn") {
@@ -164,6 +167,7 @@ const page = (props: { params: { cate: string } }) => {
                   .replace(/&/g, "-and-")}/${d.name
                   .replace(/\s+/g, "-")
                   .replace(/&/g, "-and-")}/${d.id}`}
+                onClick={() => setLoadingOpen(d.id)}
                 className="w-full flex flex-wrap min-[420px]:flex-nowrap mb-6"
               >
                 <div className="min-w-[100%] h-[150px] min-[420px]:min-w-[266px] md:h-[170px] xl:min-w-[350px] xl:h-[215px] mr-3 md:mr-5">
@@ -188,8 +192,9 @@ const page = (props: { params: { cate: string } }) => {
                   <p className="text-xs mt-1">
                     {moment(d.create_Date).format("DD/MM/YYYY HH:MM:SS")}
                   </p>
+
                   <div
-                    className={`text-sm md:text-base h-[40px] mt-2 overflow-hidden ${styles.description}`}
+                    className={`text-sm md:text-base  mt-2 overflow-hidden ${styles.description}`}
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 4,
@@ -197,6 +202,13 @@ const page = (props: { params: { cate: string } }) => {
                     }}
                     dangerouslySetInnerHTML={{ __html: d.content }}
                   ></div>
+                  {loadingOpen === d.id && (
+                    <div className="w-fit">
+                      <div className={`${stylesD.loading} loadingCircle`}>
+                        <AiOutlineLoading3Quarters />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Link>
             ))

@@ -16,6 +16,7 @@ const page = (props: { params: { cate: string } }) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingOpen, setLoadingOpen] = useState<number | null>(null);
   const [pageChoice, setPageChoice] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [data, setData] = useState<
@@ -160,7 +161,15 @@ const page = (props: { params: { cate: string } }) => {
         </div>
         {!loading ? (
           data.length > 0 ? (
-            data.map((n) => <News key={n.id} n={n} cate={props.params.cate} />)
+            data.map((n) => (
+              <News
+                key={n.id}
+                n={n}
+                cate={props.params.cate}
+                setLoadingOpen={setLoadingOpen}
+                loadingOpen={loadingOpen}
+              />
+            ))
           ) : (
             <p>không có dữ liệu</p>
           )

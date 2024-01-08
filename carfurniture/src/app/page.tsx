@@ -1,5 +1,6 @@
 "use client";
 import styles from "./styleHomePage.module.scss";
+import stylesD from "../components/Items/styleItems.module.scss";
 import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 
@@ -12,6 +13,7 @@ import Link from "next/link";
 import { MdSkipPrevious } from "react-icons/md";
 import { BiSkipNext } from "react-icons/bi";
 import dynamic from "next/dynamic";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const SlideHome = dynamic(() => import("@/components/Slide/SlideHome"), {
   loading: () => (
     <div className="w-full h-[450px] bg-[aliceblue] flex relative flex-wrap sm:flex-nowrap"></div>
@@ -125,6 +127,7 @@ export default function Home() {
     setLoadingIndex(0);
     setDataGuid(resGuide.data.data);
   };
+  const [loadingOpen, setLoadingOpen] = useState<string>("");
   const fetSDataProduct = async (index: number = 1, name?: string) => {
     if (rrrd.current) {
       if (caseChose.product.categoryName !== "Tất Cả Sản Phẩm") {
@@ -312,6 +315,7 @@ export default function Home() {
                             key={r.id}
                             id={index === arr.length - 1 ? "dropdown" : ""}
                             className={`w-[45%] h-fit sm:w-[230px] m-1 sm:m-2 md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px]  cursor-pointer`}
+                            onClick={() => setLoadingOpen(r.id + "product")}
                           >
                             <div className="w-full h-[130px] sm:h-[164px] md:h-[215px]">
                               <img
@@ -355,8 +359,16 @@ export default function Home() {
                               ></div>
                             </div>
                             <div className="my-2 flex items-center justify-center relative">
-                              <button className="text-[12px] sm:text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 pr-3 rounded-md">
-                                View more
+                              <button className="text-[12px] sm:text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 px-3 rounded-md">
+                                {loadingOpen === r.id + "product" ? (
+                                  <div
+                                    className={`${stylesD.loading} loadingCircle`}
+                                  >
+                                    <AiOutlineLoading3Quarters />
+                                  </div>
+                                ) : (
+                                  " View more"
+                                )}
                               </button>
                               <div
                                 className="absolute text-[18px] sm:text-[22px] top-[5px] right-[10px] md:right-[40px] text-[crimson]"
@@ -459,6 +471,7 @@ export default function Home() {
                         .replace(/\s+/g, "-")
                         .replace(/&/g, "-and-")}/${n.id}`}
                       key={n.id}
+                      onClick={() => setLoadingOpen(n.id + "news")}
                       className="w-[230px] h-fit xl:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer mr-2"
                     >
                       <div className="w-full h-[168px] xl:h-[174px]">
@@ -484,8 +497,14 @@ export default function Home() {
                         ></div>
                       </div>
                       <div className="my-2 flex items-center justify-center relative">
-                        <button className="text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 pr-3 rounded-md">
-                          View more
+                        <button className="text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 px-3 rounded-md">
+                          {loadingOpen === n.id + "news" ? (
+                            <div className={`${stylesD.loading} loadingCircle`}>
+                              <AiOutlineLoading3Quarters />
+                            </div>
+                          ) : (
+                            " View more"
+                          )}
                         </button>
                       </div>
                     </Link>
@@ -571,6 +590,7 @@ export default function Home() {
                         .replace(/\s+/g, "-")
                         .replace(/&/g, "-and-")}/${n.id}`}
                       key={n.id}
+                      onClick={() => setLoadingOpen(n.id + "guide")}
                       className="w-[230px] h-fit xl:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer mr-2"
                     >
                       <div className="w-full h-[168px] xl:h-[174px]">
@@ -596,8 +616,14 @@ export default function Home() {
                         ></div>
                       </div>
                       <div className="my-2 flex items-center justify-center relative">
-                        <button className="text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 pr-3 rounded-md">
-                          View more
+                        <button className="text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 px-3 rounded-md">
+                          {loadingOpen === n.id + "guide" ? (
+                            <div className={`${stylesD.loading} loadingCircle`}>
+                              <AiOutlineLoading3Quarters />
+                            </div>
+                          ) : (
+                            " View more"
+                          )}
                         </button>
                       </div>
                     </Link>
