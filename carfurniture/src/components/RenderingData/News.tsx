@@ -3,6 +3,8 @@ import moment from "moment";
 import Link from "next/link";
 import React from "react";
 import styles from "@/app/styleHomePage.module.scss";
+import stylesD from "../../components/Items/styleItems.module.scss";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const News: React.FC<{
   n: {
@@ -17,7 +19,9 @@ const News: React.FC<{
     }[];
   };
   cate: string;
-}> = ({ n, cate }) => {
+  loadingOpen: number | null;
+  setLoadingOpen: React.Dispatch<React.SetStateAction<number | null>>;
+}> = ({ n, cate, loadingOpen, setLoadingOpen }) => {
   return (
     <Link
       key={n.id}
@@ -27,9 +31,10 @@ const News: React.FC<{
         .replace(/&/g, "-and-")}/${n.name
         .replace(/\s+/g, "-")
         .replace(/&/g, "-and-")}/${n.id}`}
+      onClick={() => setLoadingOpen(n.id)}
       className="w-full flex flex-wrap min-[420px]:flex-nowrap mb-6"
     >
-      <div className="min-w-full h-[130px] min-[420px]:min-w-[250px] md:h-[155px] xl:min-w-[350px] xl:h-[210px] mr-3 md:mr-5">
+      <div className="min-w-full h-[130px] min-[420px]:min-w-[250px] md:h-[170px] xl:min-w-[350px] xl:h-[210px] mr-3 md:mr-5">
         <img
           src={n.urlImage[0]?.image}
           alt={n.urlImage[0]?.path}
@@ -52,7 +57,7 @@ const News: React.FC<{
           {moment(n.create_Date).format("DD/MM/YYYY HH:MM:SS")}
         </p>
         <div
-          className={`text-sm md:text-base h-[40px]  mt-2 overflow-hidden ${styles.description}`}
+          className={`text-sm md:text-base  mt-2 overflow-hidden ${styles.description}`}
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 4,
@@ -60,6 +65,13 @@ const News: React.FC<{
           }}
           dangerouslySetInnerHTML={{ __html: n.content }}
         ></div>
+        {loadingOpen === n.id && (
+          <div className="w-fit">
+            <div className={`${stylesD.loading} loadingCircle`}>
+              <AiOutlineLoading3Quarters />
+            </div>
+          </div>
+        )}
       </div>
     </Link>
   );

@@ -2,7 +2,9 @@
 import Link from "next/link";
 import React from "react";
 import styles from "../../app/styleHomePage.module.scss";
+import stylesD from "../../components/Items/styleItems.module.scss";
 import { SiShopee } from "react-icons/si";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Product: React.FC<{
   p: {
@@ -23,7 +25,9 @@ const Product: React.FC<{
     }[];
   };
   cate: string;
-}> = ({ p, cate }) => {
+  loadingOpen: number | null;
+  setLoadingOpen: React.Dispatch<React.SetStateAction<number | null>>;
+}> = ({ p, cate, setLoadingOpen, loadingOpen }) => {
   return (
     <Link
       key={p.id}
@@ -35,6 +39,7 @@ const Product: React.FC<{
         .replace(/&/g, "-and-")}/${p.id}`}
       className="w-[200px] m-3 md:w-[250px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px] mb-4 cursor-pointer"
       onClick={() => {
+        setLoadingOpen(p.id);
         if (typeof localStorage !== "undefined") {
           const h: number[] = JSON.parse(
             localStorage.getItem("product") ?? JSON.stringify([])
@@ -82,8 +87,14 @@ const Product: React.FC<{
         ></div>
       </div>
       <div className="my-2 flex items-center justify-center relative">
-        <button className="text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 pr-3 rounded-md">
-          View more
+        <button className="text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 px-3 rounded-md">
+          {loadingOpen === p.id ? (
+            <div className={`${stylesD.loading} loadingCircle`}>
+              <AiOutlineLoading3Quarters />
+            </div>
+          ) : (
+            " View more"
+          )}
         </button>
         <div
           className="absolute top-[5px] right-[10px] md:right-[40px] text-[crimson]"

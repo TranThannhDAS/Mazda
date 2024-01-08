@@ -163,6 +163,8 @@ const page = (props: { params: { cate: string } }) => {
   }, []);
   let managerIndex = false;
   let isIndex = false;
+  const [loadingOpen, setLoadingOpen] = useState<number | null>(null);
+
   return (
     <>
       <div className="w-full min-[800px]:w-[49%] min-[1020px]:w-[60%] p-3">
@@ -237,7 +239,13 @@ const page = (props: { params: { cate: string } }) => {
           {!loadingSearch ? (
             data?.length ? (
               data?.map((p) => (
-                <Product key={p.id} p={p} cate={props.params.cate} />
+                <Product
+                  key={p.id}
+                  p={p}
+                  cate={props.params.cate}
+                  setLoadingOpen={setLoadingOpen}
+                  loadingOpen={loadingOpen}
+                />
               ))
             ) : (
               <p>Không có sản phẩm nào</p>
