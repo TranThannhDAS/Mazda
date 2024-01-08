@@ -59,7 +59,7 @@ export default function SlideHome() {
     {
       id: 4,
       val: [
-        " ANDROID BOX DÀNH CHO XE MAZDA",
+        "ANDROID BOX DÀNH CHO XE MAZDA",
         "Chip 8 nhân mạnh mẽ, Cấu hình Ram tùy chọn hợp lý",
         "Sử dụng hệ điều hành Android mới nhất",
         "Tặng vietmap S2 dẫn đường có cảnh báo giao thông",
@@ -71,7 +71,7 @@ export default function SlideHome() {
     {
       id: 5,
       val: [
-        " CAMERA 3 MẮT CHO XE MAZDA (CÓ MAZDA CONNECT)",
+        "CAMERA 3 MẮT CHO XE MAZDA (CÓ MAZDA CONNECT)",
         "Bộ cam tùy chọn phiên bản mắt thường hoặc mắt rộng",
         "Cắm zắc zin hoàn toàn, không cắt chích hệ thống điện của xe",
         "Tích hợp hiển thị camera trước khi vào số D ",

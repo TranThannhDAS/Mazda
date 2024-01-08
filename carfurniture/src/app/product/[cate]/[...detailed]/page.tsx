@@ -8,6 +8,7 @@ import styles from "@/components/styleComponent.module.scss";
 import Image from "./Image";
 
 const page = (props: { params: { detailed: string[]; cate: string } }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<
     | {
         product: {
@@ -27,6 +28,7 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
   useEffect(() => {
     const getProduct = async (detailed: string[]) => {
       if (detailed.length === 1) {
+        setLoading(true);
         const res = await http.post("Product/GetPaginationProduct", {
           pageIndex: 1,
           pageSize: 1,
@@ -45,6 +47,7 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
         res.data.urlImage = [...res.data.avatar, ...res.data.urlImage];
         if (res.data) setData(res.data);
       }
+      setLoading(false);
     };
     getProduct(props.params.detailed);
   }, []);
@@ -52,89 +55,93 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
 
   return (
     <div className="w-full min-[1000px]:flex justify-center">
-      {data ? (
-        <div className="w-full min-[1000px]:w-[90%] relative mt-15 border-t p-5">
-          <div>
-            <div className="min-[1000px]:flex">
-              <div
-                className={`w-full ${
-                  data.urlImage?.length > 1 ? "h-[470px] " : "h-[350px] "
-                } min-[600px]:w-[500px]`}
-              >
-                <Image data={data.urlImage} />
-              </div>
-              <div
-                className={`mt-1 min-[1000px]:ml-3 ${styles.containerProductTag}`}
-              >
-                <h3
-                  className={`font-bold text-sm md:text-base ${styles.nameTag}`}
+      {!loading ? (
+        data ? (
+          <div className="w-full min-[1000px]:w-[90%] relative mt-15 border-t p-5">
+            <div>
+              <div className="min-[1000px]:flex">
+                <div
+                  className={`w-full ${
+                    data.urlImage?.length > 1 ? "h-[470px] " : "h-[350px] "
+                  } min-[600px]:w-[500px]`}
                 >
-                  {data.product.name}
-                </h3>
-                <div className="w-full mt-1 md:mt-2 flex  items-center border-b border-solid">
-                  <p className="text-[13px] md:text-[14px] font-medium text-[crimson]">
-                    {data.product.price
-                      ?.toLocaleString("en-US")
-                      .replace(/,/g, ".")}
-                    đ
-                  </p>
-                  {data.product.price_After && (
-                    <p className="text-[10px] md:text-[11px] mt-[5px] ml-2 line-through">
-                      {data.product.price_After
+                  <Image data={data.urlImage} />
+                </div>
+                <div
+                  className={`mt-1 min-[1000px]:ml-3 ${styles.containerProductTag}`}
+                >
+                  <h3
+                    className={`font-bold text-sm md:text-base ${styles.nameTag}`}
+                  >
+                    {data.product.name}
+                  </h3>
+                  <div className="w-full mt-1 md:mt-2 flex  items-center border-b border-solid">
+                    <p className="text-[13px] md:text-[14px] font-medium text-[crimson]">
+                      {data.product.price
                         ?.toLocaleString("en-US")
                         .replace(/,/g, ".")}
                       đ
                     </p>
-                  )}
-                </div>
-                <div className="mt-3 flex ">
-                  <div className="w-fit mr-2 relative my-2 text-sm text-white py-2 px-5 rounded-[20px] bg-slate-700 flex items-center">
-                    <a
-                      href={data.info_in_AboutUs[0]?.url_Mess}
-                      target="_blank"
-                      className="absolute z-10 w-full h-full left-0 top-0"
-                    ></a>
-                    <div className="flex text-[20px] text-[#4993de] mr-2">
-                      <PiMessengerLogoLight />
-                    </div>{" "}
-                    Messenger
+                    {data.product.price_After && (
+                      <p className="text-[10px] md:text-[11px] mt-[5px] ml-2 line-through">
+                        {data.product.price_After
+                          ?.toLocaleString("en-US")
+                          .replace(/,/g, ".")}
+                        đ
+                      </p>
+                    )}
                   </div>
-                  <div className="w-fit relative mr-2 my-2 text-sm text-white py-2 px-5 rounded-[20px] bg-slate-700 flex items-center">
-                    <a
-                      href={`tel:${data.info_in_AboutUs[0]?.phone}`}
-                      className="absolute z-10 w-full h-full left-0 top-0"
-                    ></a>
-                    <div className="flex text-[20px] text-[#57eb57] mr-2">
-                      <CiPhone />
-                    </div>{" "}
-                    {data.info_in_AboutUs[0]?.phone}
-                  </div>
-                  <div className="w-fit relative mr-2 my-2 text-sm text-white py-2 px-5 rounded-[20px] flex items-center bg-slate-700">
-                    <a
-                      href={data.product.urlShoppe}
-                      target="_blank"
-                      className="absolute z-10 w-full h-full left-0 top-0"
-                    ></a>
-                    <div className="flex text-[#ff6f6f] text-[20px] mr-2">
-                      {" "}
-                      <SiShopee />
-                    </div>{" "}
-                    Shoppe
+                  <div className="mt-3 flex ">
+                    <div className="w-fit mr-2 relative my-2 text-sm text-white py-2 px-5 rounded-[20px] bg-slate-700 flex items-center">
+                      <a
+                        href={data.info_in_AboutUs[0]?.url_Mess}
+                        target="_blank"
+                        className="absolute z-10 w-full h-full left-0 top-0"
+                      ></a>
+                      <div className="flex text-[20px] text-[#4993de] mr-2">
+                        <PiMessengerLogoLight />
+                      </div>{" "}
+                      Messenger
+                    </div>
+                    <div className="w-fit relative mr-2 my-2 text-sm text-white py-2 px-5 rounded-[20px] bg-slate-700 flex items-center">
+                      <a
+                        href={`tel:${data.info_in_AboutUs[0]?.phone}`}
+                        className="absolute z-10 w-full h-full left-0 top-0"
+                      ></a>
+                      <div className="flex text-[20px] text-[#57eb57] mr-2">
+                        <CiPhone />
+                      </div>{" "}
+                      {data.info_in_AboutUs[0]?.phone}
+                    </div>
+                    <div className="w-fit relative mr-2 my-2 text-sm text-white py-2 px-5 rounded-[20px] flex items-center bg-slate-700">
+                      <a
+                        href={data.product.urlShoppe}
+                        target="_blank"
+                        className="absolute z-10 w-full h-full left-0 top-0"
+                      ></a>
+                      <div className="flex text-[#ff6f6f] text-[20px] mr-2">
+                        {" "}
+                        <SiShopee />
+                      </div>{" "}
+                      Shoppe
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-5">
-              <h3 className="text-sm font-semibold">Mô tả</h3>
-              <div
-                className={`text-xs md:text-[13px] w-full mb-5 ${styles.dangerouslySet} `}
-                dangerouslySetInnerHTML={{ __html: data.product.description }}
-              ></div>
+              <div className="mt-5">
+                <h3 className="text-sm font-semibold">Mô tả</h3>
+                <div
+                  className={`text-xs md:text-[13px] w-full mb-5 ${styles.dangerouslySet} `}
+                  dangerouslySetInnerHTML={{ __html: data.product.description }}
+                ></div>
+              </div>
             </div>
+            <div></div>
           </div>
-          <div></div>
-        </div>
+        ) : (
+          <p className="m-2">Không tìm thấy sản phẩm</p>
+        )
       ) : (
         <p className="m-2">Loading...</p>
       )}
