@@ -30,7 +30,7 @@ const page = (props: { params: { detailed: string[] | string } }) => {
   return (
     <div className="w-full min-[1000px]:flex justify-center">
       <div className="w-full min-[1000px]:w-[1000px] relative mt-15 border-t p-5">
-        {data && (
+        {data ? (
           <div>
             <div className="w-[90%] h-[90%]">
               <h3
@@ -56,6 +56,8 @@ const page = (props: { params: { detailed: string[] | string } }) => {
             </div>
             <div></div>
           </div>
+        ) : (
+          <p className="m-2 w-full text-center">Loading...</p>
         )}
       </div>
     </div>

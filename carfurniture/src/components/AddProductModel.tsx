@@ -295,6 +295,7 @@ const AddProductModel: React.FC<{
     "link",
     "image",
     "video",
+    "align",
   ];
 
   const modules = {
