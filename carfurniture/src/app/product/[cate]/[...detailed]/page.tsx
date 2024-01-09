@@ -51,8 +51,6 @@ const page = (props: { params: { detailed: string[]; cate: string } }) => {
     };
     getProduct(props.params.detailed);
   }, []);
-  console.log(props, "props", data);
-
   return (
     <div className="w-full min-[1000px]:flex justify-center">
       {!loading ? (

@@ -218,8 +218,6 @@ const page = () => {
     }
   }, [dataCate, categoryType]);
   async function fetCateName(name: string, index = 1, search?: string) {
-    console.log(name, "name");
-
     const accessToken = cookies.get("token");
     const refreshToken = cookies.get("refreshToken");
     try {

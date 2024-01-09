@@ -50,34 +50,13 @@ const RoutListing: React.FC<{
     ];
     setRouts(d);
   }, []);
-  console.log(
-    routs,
-    "ataHasSeen",
-    decodeURIComponent(pathname)?.replace(/-/g, " ").split(`/`)[2],
-    decodeURIComponent(pathname)
-      ?.replace(/-/g, " ")
-      .split(routs[1] ?? ""),
-    decodeURIComponent(pathname)?.replace(/-/g, " ").split(`/`)
-  );
 
   useEffect(() => {
     routs[0] = title;
     if (routs.length > 1 || rr.current) {
       if (!pathname.split(`${currentPath}/`)[1])
         setRouts((pre) => pre.filter((r, index) => index !== 1));
-      console.log(
-        decodeURIComponent(pathname)
-          ?.replace(/-/g, " ")
-          .split(routs[1] ?? ""),
-        "in222",
-        routs
-      );
       if (decodeURIComponent(pathname)?.replace(/-/g, " ").split(`/`)[2]) {
-        console.log(
-          decodeURIComponent(pathname)?.replace(/-/g, " ").split(`/`),
-          "in123"
-        );
-
         if (decodeURIComponent(pathname)?.replace(/-/g, " ").split(`/`)[2]) {
           routs[1] = decodeURIComponent(pathname)
             ?.replace(/-/g, " ")

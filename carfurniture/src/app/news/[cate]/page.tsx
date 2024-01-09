@@ -31,7 +31,7 @@ const page = (props: { params: { cate: string } }) => {
   >([]);
   const getNews = async (cate: string, index = 1, name?: string) => {
     setLoading(true);
-    if (decodeURIComponent(cate) !== "Tất Cả Tin Tức") {
+    if (decodeURIComponent(cate)?.replace(/-/g, " ") !== "Tất Cả Tin Tức") {
       if (name) {
         setLoadingSearch(true);
 

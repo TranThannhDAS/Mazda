@@ -30,7 +30,7 @@ const page = (props: { params: { cate: string } }) => {
   const [loadingOpen, setLoadingOpen] = useState<number | null>(null);
   const getNews = async (cate: string, index = 1, name?: string) => {
     setLoading(true);
-    if (decodeURIComponent(cate) !== "Tất Cả Hướng Dẫn") {
+    if (decodeURIComponent(cate)?.replace(/-/g, " ") !== "Tất Cả Hướng Dẫn") {
       if (name) {
         setLoadingSearch(true);
         const res = await http.post("Guide/GetPaginationProduct", {

@@ -204,7 +204,6 @@ const AddProductModel: React.FC<{
             : 0 + f.id + 1,
           file: URL.createObjectURL(f.file),
         }));
-        console.log(image, fils, "dd", dd);
         const cc = fils.map((f: any) => ({
           id: image[image.length - 1]?.id
             ? image[image.length - 1].id + f.id + 1
@@ -216,8 +215,6 @@ const AddProductModel: React.FC<{
       }
     }
   };
-  console.log(image, "image");
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -246,8 +243,6 @@ const AddProductModel: React.FC<{
             const res = await axio.post("Product/Create", formData);
           }
         } else {
-          console.log(checkRef, "delPath", delPath);
-
           formData.append("Price_After", product.Discount);
           delPath.map((f, index) => {
             formData.append("Paths", f.path);
@@ -327,8 +322,6 @@ const AddProductModel: React.FC<{
     },
     // Add more modules as needed
   };
-  console.log(product.FormCollection, "product.FormCollection");
-
   return (
     <>
       <div
@@ -401,8 +394,6 @@ const AddProductModel: React.FC<{
                     <div
                       className="absolute top-[10px] right-2 bg-white rounded-[50%] z-10 text-[23px] p-[3px] cursor-pointer"
                       onClick={() => {
-                        console.log(url);
-
                         product.FormCollection?.filter((f) => f.id !== url.id);
                         setProduct((pre) => {
                           pre.FormCollection = pre.FormCollection?.filter(
