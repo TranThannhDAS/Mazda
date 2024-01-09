@@ -302,91 +302,83 @@ export default function Home() {
               <div className="h-[1272px] min-[640px]:h-[1455px] min-[768px]:h-[1690px] min-[1062px]:h-[1267px] min-[1345px]:h-[834px]">
                 <div className="w-full flex flex-wrap mt-7 px-1 justify-center ">
                   {!loadingType ? (
-                    <>
-                      {dataProducts.length > 0 ? (
-                        dataProducts.map((r, index, arr) => (
-                          <Link
-                            href="/[slug]"
-                            as={`product/${r.categoryName
-                              ?.replace(/\s+/g, "-")
-                              .replace(/&/g, "-and-")}/${r.name
-                              .replace(/\s+/g, "-")
-                              .replace(/&/g, "-and-")}/${r.id}`}
-                            key={r.id}
-                            id={index === arr.length - 1 ? "dropdown" : ""}
-                            className={`w-[45%] h-fit sm:w-[230px] m-1 sm:m-2 md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px]  cursor-pointer`}
-                            onClick={() => setLoadingOpen(r.id + "product")}
+                    dataProducts.map((r, index, arr) => (
+                      <Link
+                        href="/[slug]"
+                        as={`product/${r.categoryName
+                          ?.replace(/\s+/g, "-")
+                          .replace(/&/g, "-and-")}/${r.name
+                          .replace(/\s+/g, "-")
+                          .replace(/&/g, "-and-")}/${r.id}`}
+                        key={r.id}
+                        id={index === arr.length - 1 ? "dropdown" : ""}
+                        className={`w-[45%] h-fit sm:w-[230px] m-1 sm:m-2 md:w-[300px] p-1 border shadow-[0_0_3px_#7a7a7a] hover:shadow-[0_0_10px]  cursor-pointer`}
+                        onClick={() => setLoadingOpen(r.id + "product")}
+                      >
+                        <div className="w-full h-[130px] sm:h-[164px] md:h-[215px]">
+                          <img
+                            src={r.urlImage[0]?.image}
+                            alt={r.urlImage[0]?.path}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className={`mt-1 ${styles.containerProductTag}`}>
+                          <h3
+                            className={`font-bold text-[13px] sm:text-sm md:text-base ${styles.nameTag}`}
                           >
-                            <div className="w-full h-[130px] sm:h-[164px] md:h-[215px]">
-                              <img
-                                src={r.urlImage[0]?.image}
-                                alt={r.urlImage[0]?.path}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div
-                              className={`mt-1 ${styles.containerProductTag}`}
-                            >
-                              <h3
-                                className={`font-bold text-[13px] sm:text-sm md:text-base ${styles.nameTag}`}
-                              >
-                                {r.name}
-                              </h3>
-                              <div className="w-full mt-1 md:mt-2 flex items-center border-b border-solid">
-                                <p className="text-[11px] sm:text-[13px] md:text-[14px] font-medium text-[crimson]">
-                                  {r.price
-                                    .toLocaleString("en-US")
-                                    .replace(/,/g, ".")}
-                                </p>
-                                {r.price_After && (
-                                  <p className="text-[10px] md:text-[11px] mt-[5px] ml-2 line-through">
-                                    {r.price_After
-                                      .toLocaleString("en-US")
-                                      .replace(/,/g, ".")}
-                                  </p>
-                                )}
-                              </div>
+                            {r.name}
+                          </h3>
+                          <div className="w-full mt-1 md:mt-2 flex items-center border-b border-solid">
+                            <p className="text-[11px] sm:text-[13px] md:text-[14px] font-medium text-[crimson]">
+                              {r.price
+                                .toLocaleString("en-US")
+                                .replace(/,/g, ".")}
+                            </p>
+                            {r.price_After && (
+                              <p className="text-[10px] md:text-[11px] mt-[5px] ml-2 line-through">
+                                {r.price_After
+                                  .toLocaleString("en-US")
+                                  .replace(/,/g, ".")}
+                              </p>
+                            )}
+                          </div>
+                          <div
+                            className={`text-[13px] sm:text-sm md:text-base h-[40px] sm:h-[45px]  mt-2 overflow-hidden ${styles.description}`}
+                            style={{
+                              display: "-webkit-box",
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: "vertical",
+                            }}
+                            dangerouslySetInnerHTML={{
+                              __html: r.description,
+                            }}
+                          ></div>
+                        </div>
+                        <div className="my-2 flex items-center justify-center relative">
+                          <button className="text-[12px] sm:text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 px-3 rounded-md">
+                            {loadingOpen === r.id + "product" ? (
                               <div
-                                className={`text-[13px] sm:text-sm md:text-base h-[40px] sm:h-[45px]  mt-2 overflow-hidden ${styles.description}`}
-                                style={{
-                                  display: "-webkit-box",
-                                  WebkitLineClamp: 2,
-                                  WebkitBoxOrient: "vertical",
-                                }}
-                                dangerouslySetInnerHTML={{
-                                  __html: r.description,
-                                }}
-                              ></div>
-                            </div>
-                            <div className="my-2 flex items-center justify-center relative">
-                              <button className="text-[12px] sm:text-sm shadow-[0_0_2px_#4a8cbf] border-[#4a8cbf] border-[1px] p-1 px-3 rounded-md">
-                                {loadingOpen === r.id + "product" ? (
-                                  <div
-                                    className={`${stylesD.loading} loadingCircle`}
-                                  >
-                                    <AiOutlineLoading3Quarters />
-                                  </div>
-                                ) : (
-                                  " View more"
-                                )}
-                              </button>
-                              <div
-                                className="absolute text-[18px] sm:text-[22px] top-[5px] right-[10px] md:right-[40px] text-[crimson]"
-                                style={{ color: "crimson !important" }}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  window.open(r.urlShoppe, "_blank");
-                                }}
+                                className={`${stylesD.loading} loadingCircle`}
                               >
-                                <SiShopee />
+                                <AiOutlineLoading3Quarters />
                               </div>
-                            </div>
-                          </Link>
-                        ))
-                      ) : (
-                        <p>Không có sản phẩm nào</p>
-                      )}
-                    </>
+                            ) : (
+                              " View more"
+                            )}
+                          </button>
+                          <div
+                            className="absolute text-[18px] sm:text-[22px] top-[5px] right-[10px] md:right-[40px] text-[crimson]"
+                            style={{ color: "crimson !important" }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.open(r.urlShoppe, "_blank");
+                            }}
+                          >
+                            <SiShopee />
+                          </div>
+                        </div>
+                      </Link>
+                    ))
                   ) : (
                     <p>Loading...</p>
                   )}{" "}
