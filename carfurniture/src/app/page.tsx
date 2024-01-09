@@ -143,7 +143,6 @@ export default function Home() {
           setDataProducts(res.data.data);
           setLoading(false);
         } else {
-          console.log("1111111111111111");
           rrrd.current = false;
 
           const res = await http.post("Product/GetPaginationProduct", {
@@ -173,9 +172,7 @@ export default function Home() {
           setDataProducts(res.data.data);
           setLoading(false);
         } else {
-          console.log("1111111111111111");
           rrrd.current = false;
-
           const res = await http.post("Product/GetPaginationProduct", {
             pageIndex: index,
             pageSize: 8,
@@ -229,8 +226,6 @@ export default function Home() {
   let managerIndexG = false;
   let isIndexG = false;
   const [loadingIndex, setLoadingIndex] = useState<number>(0);
-  console.log(dataProducts, "dataProducts");
-
   return (
     <>
       <div className="w-full  ">

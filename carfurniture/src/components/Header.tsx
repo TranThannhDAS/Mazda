@@ -67,14 +67,6 @@ const Header = () => {
   };
 
   const [onTab, setOnTab] = useState<boolean>(false);
-  console.log(
-    active,
-    "active",
-    !(active.indexOf("product") > 0) &&
-      !(active.indexOf("news") > 0) &&
-      !(active.indexOf("guide") > 0),
-    active.indexOf("news")
-  );
 
   return (
     <div className="w-full  bg-white flex justify-center h-auto sm:h-[125px] pt-4 border-b-2">
