@@ -39,6 +39,7 @@ const page = (props: { params: { cate: string } }) => {
           pageIndex: index,
           pageSize: 6,
           search_Name: name,
+          search_CategoryName: cate,
         });
         setPageIndex(res.data.totalPageIndex);
         setData(res.data.data);
@@ -47,6 +48,7 @@ const page = (props: { params: { cate: string } }) => {
         const res = await http.post("Blog/GetPaginationProduct", {
           pageIndex: index,
           pageSize: 6,
+          search_CategoryName: cate,
         });
         setPageIndex(res.data.totalPageIndex);
         setData(res.data.data);
@@ -54,7 +56,6 @@ const page = (props: { params: { cate: string } }) => {
     } else {
       if (name) {
         setLoadingSearch(true);
-
         const res = await http.post("Blog/GetPaginationProduct", {
           pageIndex: index,
           pageSize: 6,

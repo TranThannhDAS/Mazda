@@ -327,6 +327,7 @@ const page = () => {
       if (nameRout) setRouts((pre) => [...pre, nameRout]);
     }
   }, [nameRout]);
+  console.log(nameRout, "categoryName");
 
   const handleRount = (vl: string) => {
     // change rout
@@ -556,22 +557,31 @@ const page = () => {
           </div>
         </div>
         <div className="flex w-full md:w-[70%] flex-wrap justify-center border-l border-t border-b-slate-900 p-5 relative">
-          {routs[1] && (
-            <div
-              className="absolute top-1 right-2 z-20 px-3 py-2 rounded-[5px] bg-[#1e7ccd] cursor-pointer text-white"
-              onClick={() => {
-                setAdd(routs[1]);
-                setLoad(!load);
-                setProductUp(undefined);
-                setNewsUp(undefined);
-                setGuideUp(undefined);
-              }}
-            >
-              {categoryType === product && <p>Thêm sản phẩm</p>}
-              {categoryType === news && <p>Thêm tin tức</p>}
-              {categoryType === guide && <p>Thêm hướng dẫn</p>}
-            </div>
-          )}
+          {nameRout !== "Tất Cả Sản Phẩm" &&
+            nameRout !== "Tất Cả Tin Tức" &&
+            nameRout !== "Tất Cả Hướng Dẫn" &&
+            routs[1] && (
+              <div
+                className="absolute top-1 right-2 z-20 px-3 py-2 rounded-[5px] bg-[#1e7ccd] cursor-pointer text-white"
+                onClick={() => {
+                  setAdd(routs[1]);
+                  setLoad(!load);
+                  setProductUp(undefined);
+                  setNewsUp(undefined);
+                  setGuideUp(undefined);
+                }}
+              >
+                {categoryType === product && nameRout !== "Tất Cả Sản Phẩm" && (
+                  <p>Thêm sản phẩm</p>
+                )}
+                {categoryType === news && nameRout !== "Tất Cả Tin Tức" && (
+                  <p>Thêm tin tức</p>
+                )}
+                {categoryType === guide && nameRout !== "Tất Cả Hướng Dẫn" && (
+                  <p>Thêm hướng dẫn</p>
+                )}
+              </div>
+            )}
           <div className="w-full mb-4">
             <InputSearch
               placeholder={routs[1]}

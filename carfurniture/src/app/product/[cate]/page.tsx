@@ -106,12 +106,13 @@ const page = (props: { params: { cate: string } }) => {
         }
       }
     } else {
-      if (decodeURIComponent(cate) !== "Tất Cả Sản Phẩm") {
+      if (decodeURIComponent(cate)?.replace(/-/g, " ") !== "Tất Cả Sản Phẩm") {
         if (name) {
           const res = await http.post("Product/GetPaginationProduct", {
             pageIndex: index,
             pageSize: 6,
             search_Name: name,
+            search_CategoryName: cate,
           });
           setPageIndex(res.data.totalPageIndex);
           setData(res.data.data);
@@ -120,6 +121,7 @@ const page = (props: { params: { cate: string } }) => {
           const res = await http.post("Product/GetPaginationProduct", {
             pageIndex: index,
             pageSize: 6,
+            search_CategoryName: cate,
           });
           setPageIndex(res.data.totalPageIndex);
           setLoadingSearch(false);
