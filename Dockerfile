@@ -8,7 +8,7 @@ RUN apt update -y \
     && apt-get install python-certbot-nginx -y \
     && apt-get clean
 COPY nginx.conf /etc/nginx/sites-available/default
-COPY nginx.conf etc/nginx/sites-enabled/
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 EXPOSE 80
 
 STOPSIGNAL SIGTERM
