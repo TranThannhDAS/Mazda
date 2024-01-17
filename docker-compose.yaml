@@ -9,7 +9,7 @@ services:
             - 8080:80
             - 443:443
     volumes:
-      - ./nginx.conf:/etv/nginx/sites-available/default       
+      - ./nginx.conf:/etc/nginx/sites-available/default       
     restart: always  
   mazda_be:
     container_name: mazda_be
