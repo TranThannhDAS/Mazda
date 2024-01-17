@@ -1,12 +1,23 @@
 version: '3'
 services:
+  nginx:
+    container_name: nginx_backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+            - 8080:80
+            - 443:443
+    volumes:
+      - ./nginx.conf:/etv/nginx/sites-available/default       
+    restart: always  
   mazda_be:
-    container_name: mazda_be_container
+    container_name: mazda_be
     build:
       context: ./Mazda_BE
       dockerfile: Dockerfile
     ports:
-      - "5217:443"
+      - "1131:80"
     networks:
       - mazda_network
 networks:
